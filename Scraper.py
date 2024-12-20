@@ -30,10 +30,9 @@ BASE_URL = 'https://www.whoscored.com/Teams/65/Fixtures/Spain-Barcelona'
 def initialize_driver():
     """Initialize the Selenium WebDriver."""
     options = webdriver.ChromeOptions()
-    # options.add_argument('--headless')  # Run in headless mode for server environments
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
-    service = Service('./chromedriver.exe')  # Update path as needed
+    service = Service('./chromedriver.exe')
     driver = webdriver.Chrome(service=service, options=options)
     driver.get(BASE_URL)
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'a[href*="Live"]')))
