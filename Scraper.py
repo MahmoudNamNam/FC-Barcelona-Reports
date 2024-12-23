@@ -1,3 +1,4 @@
+from datetime import datetime
 import json
 import time
 import re
@@ -83,7 +84,7 @@ def scrape_match_data(driver, match_id, url, competition):
         match_info = {
             '_id': match_id,
             'competition': competition,
-            'date': matchdict.get('startTime'),
+            'date': datetime.strptime(matchdict.get('startTime'), "%Y-%m-%dT%H:%M:%S"),
             'home_team_id': matchdict['home']['teamId'],
             'away_team_id': matchdict['away']['teamId'],
             'home_team_name': matchdict['home']['name'],
@@ -91,20 +92,33 @@ def scrape_match_data(driver, match_id, url, competition):
             'home_score_fulltime': matchdict['home']['scores'].get('fulltime', 0),
             'away_score_fulltime': matchdict['away']['scores'].get('fulltime', 0),
             'home_shots_total': sum_stats(matchdict['home']['stats'].get('shotsTotal', {})),
+            'home_shots_on_target': sum_stats(matchdict['home']['stats'].get('shotsOnTarget', {})),
+            'home_possession': sum_stats(matchdict['home']['stats'].get('possession', {})),
+            'home_passes_total': sum_stats(matchdict['home']['stats'].get('passesTotal', {})),
+            'home_pass_completion': sum_stats(matchdict['home']['stats'].get('passesAccurate', 0)),
+            'home_fouls_committed': sum_stats(matchdict['home']['stats'].get('foulsCommited', {})),
+            'home_corners': sum_stats(matchdict['home']['stats'].get('cornersTotal', {})),
+            'home_offsides_caught': sum_stats(matchdict['home']['stats'].get('offsidesCaught', {})),
             'away_shots_total': sum_stats(matchdict['away']['stats'].get('shotsTotal', {})),
+            'away_shots_on_target': sum_stats(matchdict['away']['stats'].get('shotsOnTarget', {})),
+            'away_possession': sum_stats(matchdict['away']['stats'].get('possession', {})),
+            'away_passes_total': sum_stats(matchdict['away']['stats'].get('passesTotal', {})),
+            'away_pass_completion': sum_stats(matchdict['away']['stats'].get('passesAccurate', 0)),
+            'away_fouls_committed': sum_stats(matchdict['away']['stats'].get('foulsCommited', {})),
+            'away_corners': sum_stats(matchdict['away']['stats'].get('cornersTotal', {})),
+            'away_offsides_caught': sum_stats(matchdict['away']['stats'].get('offsidesCaught', {}))
         }
 
-        teams_data = [{
-            '_id': matchdict['home']['teamId'],
-            'name': matchdict['home']['name'],
-            'country_name': matchdict['home']['countryName'],
-            'competition': competition
-        }, {
-            '_id': matchdict['away']['teamId'],
-            'name': matchdict['away']['name'],
-            'country_name': matchdict['away']['countryName'],
-            'competition': competition
-        }]
+        teams_data = []
+        for side in ['home', 'away']:
+            team = matchdict[side]
+            teams_data.append({
+                '_id': team['teamId'],
+                'name': team['name'],
+                'country_name': team['countryName'],
+                'manager_name': team.get('managerName', 'Unknown'),
+                'competition': competition
+            })
 
         players_data = []
         for side in ['home', 'away']:
@@ -114,7 +128,11 @@ def scrape_match_data(driver, match_id, url, competition):
                     '_id': f"{player['playerId']}_{match_id}",
                     'player_id': player['playerId'],
                     'name': player['name'],
+                    'shirt_no': player['shirtNo'],
+                    'position': player['position'],
+                    'age': player.get('age', 'Unknown'),
                     'team_id': team['teamId'],
+                    'stats': player.get('stats', {}),
                     'competition': competition,
                     'match_id': match_id
                 })
