@@ -1,0 +1,9 @@
+pandas
+numpy
+selenium
+pymongo[srv]==3.12.1
+beautifulsoup4
+streamlit
+mplsoccer
+matplotlib
+python-dotenv
