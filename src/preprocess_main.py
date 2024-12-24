@@ -1,8 +1,8 @@
 import logging
-from preprocess_matches import preprocess_matches
-from preprocess_teams import preprocess_teams
-from preprocess_players import preprocess_players
-from preprocess_events import preprocess_events
+from preprocess.matches import preprocess_matches
+from preprocess.teams import preprocess_teams
+from preprocess.players import preprocess_players
+from preprocess.events import preprocess_events
 
 # Configure logger
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
