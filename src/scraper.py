@@ -12,6 +12,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import os
+from utils.download_logo import download_logo
 
 # Load environment variables
 load_dotenv(dotenv_path='config.env')
@@ -175,17 +176,30 @@ def main():
 
             if match_info:
                 db.matches.update_one({'_id': match_info['_id']}, {'$set': match_info}, upsert=True)
+
             if teams_data:
                 for team in teams_data:
+                    # Add logo URL and download logo
+                    logo_url = f"https://d2zywfiolv4f83.cloudfront.net/img/teams/{team['_id']}.png"
+                    result = download_logo(team['name'], logo_url)
+                    if result:
+                        log.info(f"Logo for team {team['name']} downloaded successfully.")
+                    else:
+                        log.warning(f"Failed to download logo for team {team['name']}.")
+
+                    # Update team data in the database
                     db.teams.update_one({'_id': team['_id']}, {'$set': team}, upsert=True)
+
             if players_data:
                 for player in players_data:
                     db.players.update_one({'_id': player['_id']}, {'$set': player}, upsert=True)
+
             if events_data:
                 for event in events_data:
                     db.events.update_one({'_id': event['_id']}, {'$set': event}, upsert=True)
 
             time.sleep(INTERVAL_SECONDS)
+
 
     log.info("Scraping completed successfully.")
     driver.quit()
