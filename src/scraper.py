@@ -144,7 +144,8 @@ def scrape_match_data(driver, match_id, url, competition):
                 '_id': f"{match_id}_{event.get('eventId', '')}",
                 'match_id': match_id,
                 'type': event.get('type', {}).get('displayName'),
-                'minute': event.get('minute')
+                'minute': event.get('minute'),
+                'team_id': event.get('teamId'),
             })
 
         return match_info, teams_data, players_data, events_data
