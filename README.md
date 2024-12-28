@@ -108,6 +108,4 @@ Dependencies listed in `requirements.txt`:
 - Include more advanced visualizations and analytics.
 - Enable user authentication to save and share custom reports.
 
----
-**Contributions and Feedback**
-Contributions are welcome! Feel free to open an issue or submit a pull request. For feedback, contact.
+
