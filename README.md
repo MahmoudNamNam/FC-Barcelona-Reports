@@ -4,7 +4,6 @@
 </div>
 
 
-
 ## Overview
 
 This project provides a web application for analyzing and visualizing FC Barcelona's match data. The application is built with Streamlit, scrapes match data from WhoScored, processes and stores it in MongoDB, and displays it in a streamlined dashboard.
