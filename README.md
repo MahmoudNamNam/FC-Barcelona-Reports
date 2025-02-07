@@ -1,4 +1,4 @@
-<div align="center">
+![screenshot-fcbmatchreport-streamlit-app-1733617811709](https://github.com/user-attachments/assets/25522fa4-716f-4edd-8b1b-2cbd78bac8d2)<div align="center">
   <img src="https://github.com/user-attachments/assets/38e0d35d-e169-4a9a-a288-19f61282ff58" alt="Barcelona Logo" width="200"/>
   <h1>FC Barcelona Reports</h1>
 </div>
@@ -7,6 +7,8 @@
 ## Overview
 
 This project provides a web application for analyzing and visualizing FC Barcelona's match data. The application is built with Streamlit, scrapes match data from WhoScored, processes and stores it in MongoDB, and displays it in a streamlined dashboard.
+![screenshot-fcbmatchreport-streamlit-app-1733617811709](https://github.com/user-attachments/assets/797b5d0e-4b4c-460e-97c8-23ad81088b67)
+
 
 ## Features
 
